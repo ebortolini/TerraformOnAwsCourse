@@ -28,3 +28,21 @@ Values exposed by a particular resource. References to resource attributes takes
 
 ## Meta-arguments
 change a resource type's behavior, and are not resource specific. For example, ``count`` and ``for_each``.
+
+## Top level blocks
+
+Terraform language uses a limited number of top-level block types, which are blocks that can appear outside of any other block in a TF configuration file.
+
+### Fundamental Block
+ - Terraform Block
+ - Providers Block
+ - Resources Block
+
+### Variable Blocks
+ - Input Variables
+ - Output Variables
+ - Local Values
+
+### Calling / Referencing Blocks
+ - Data Sources
+ - Modules
