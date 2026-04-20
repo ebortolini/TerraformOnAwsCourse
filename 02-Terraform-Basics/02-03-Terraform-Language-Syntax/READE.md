@@ -20,3 +20,11 @@ flowchart LR
   classDef purpleBox fill:#6f42c1,stroke:#6f42c1,color:#fff,stroke-width:1px;
 ```
 
+## Arguments
+Configura a particular resource: becuase of this many arguments are resource specific. Arguments can be `required` or `optional`.
+
+## Attributes
+Values exposed by a particular resource. References to resource attributes takes the format resourse_type.resource_name.attribute_name.
+
+## Meta-arguments
+change a resource type's behavior, and are not resource specific. For example, ``count`` and ``for_each``.
