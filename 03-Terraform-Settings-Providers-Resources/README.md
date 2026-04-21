@@ -28,3 +28,10 @@ Each terraform block can contain a number of settings related to Terraform's beh
 
 - Each Resource block describes one or more infrastructure objects
 - Provisioners: We can configure Resource post-creation actions
+
+## Terraform State
+
+ - Terrafom must store state about managed infrastructure and configuration
+ - This state is use dby Terraform to map real world resources to your configuration (.tf files), keep track of metadata, and to improve performance for large infrastructures.
+ - This state is stored by default in a local file named "terraform.tfstate", but it can also be stored remotely, which works better in a team environment.
+ - The primary purpose of Terraform state is to store bindings between objects in a remote system and resource instances declared in your configuration.
