@@ -8,7 +8,7 @@ We can call Terraform COnfiguration Files or Terraform Manifests.
 
 ## Configuration Sintax
 
-```Mermaid
+```mermaid
 flowchart LR
   HCL[HCL — HashiCorp Language] --> TF[Terraform]
   TF --> Blocks[Blocks]
