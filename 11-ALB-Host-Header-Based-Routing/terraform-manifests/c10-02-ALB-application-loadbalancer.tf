@@ -32,7 +32,7 @@ module "alb" {
       protocol                    = "HTTPS"
       ssl_policy                  = "ELBSecurityPolicy-TLS13-1-2-Res-2021-06"
       certificate_arn             = module.acm.acm_certificate_arn
-
+       
        # Fixed Response for Root Context 
        fixed_response = {
         content_type = "text/plain"
@@ -58,8 +58,8 @@ module "alb" {
             }
           }]
           conditions = [{
-            path_pattern = {
-              values = ["/app1*"]
+            host_header = {
+              values = [var.app1_dns_name]
             }
           }]
         }# End of myapp1-rule
@@ -79,8 +79,8 @@ module "alb" {
             }
           }]
           conditions = [{
-            path_pattern = {
-              values = ["/app2*"]
+            host_header = {
+              values = [var.app2_dns_name]
             }
           }]
         }# End of myapp2-rule Block
@@ -90,7 +90,7 @@ module "alb" {
 
 # Target Groups
   target_groups = {
-  # Target Group-1: mytg1
+  # Target Group-1: mytg1  
    mytg1 = {
       # VERY IMPORTANT: We will create aws_lb_target_group_attachment resource separately when we use create_attachment = false, refer above GitHub issue URL.
       ## Github ISSUE: https://github.com/terraform-aws-modules/terraform-aws-alb/issues/316
@@ -115,13 +115,13 @@ module "alb" {
         matcher             = "200-399"
       }# End of Health Check Block
       tags = local.common_tags # Target Group Tags 
-    } # END of Target Group-1: mytg1
+    }# END of Target Group-1: mytg1
 
-  # Target Group-1: mytg2 
+  # Target Group-1: mytg2   
    mytg2 = {
       # VERY IMPORTANT: We will create aws_lb_target_group_attachment resource separately when we use create_attachment = false, refer above GitHub issue URL.
       ## Github ISSUE: https://github.com/terraform-aws-modules/terraform-aws-alb/issues/316
-      ## Search for "create_attachment" to jump to that Github issue solution      
+      ## Search for "create_attachment" to jump to that Github issue solution 
       create_attachment = false
       name_prefix                       = "mytg2-"
       protocol                          = "HTTP"
@@ -145,7 +145,7 @@ module "alb" {
     } # END of Target Group-2: mytg2
   } # END OF target_groups
   tags = local.common_tags # ALB Tags
-}# End of alb module
+}
 
 # mytg1: LB Target Group Attachment
 resource "aws_lb_target_group_attachment" "mytg1" {
@@ -154,7 +154,7 @@ resource "aws_lb_target_group_attachment" "mytg1" {
   target_id        = each.value.id
   port             = 80
 }
- 
+
 # mytg2: LB Target Group Attachment
 resource "aws_lb_target_group_attachment" "mytg2" {
   for_each = {for k,v in module.ec2_private_app2: k => v}
