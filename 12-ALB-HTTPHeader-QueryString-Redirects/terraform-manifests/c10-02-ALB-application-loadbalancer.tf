@@ -59,7 +59,8 @@ module "alb" {
           }]
           conditions = [{
             host_header = {
-              values = [var.app1_dns_name]
+              http_header_name = "custom-header"
+              values           = ["app-1", "app1", "my-app-1"]
             }
           }]
         }# End of myapp1-rule
@@ -80,10 +81,49 @@ module "alb" {
           }]
           conditions = [{
             host_header = {
-              values = [var.app2_dns_name]
+              http_header_name = "custom-header"
+              values           =  ["app-2", "app2", "my-app-2"]
             }
           }]
         }# End of myapp2-rule Block
+         # Rule-3: Query String Redirect Redirect Rule
+        my-redirect-query = {
+          priority = 3
+          actions = [{
+            type        = "redirect"
+            status_code = "HTTP_302"
+            host        = "stacksimplify.com"
+            path        = "/aws-eks/"
+            query       = ""
+            protocol    = "HTTPS"
+          }]
+
+          conditions = [{
+            query_string = {
+              key   = "website"
+              value = "aws-eks"
+            }
+          }]
+        }# End of Rule-3 Query String Redirect Redirect Rule
+
+        # Rule-4: Host Header Redirect
+        my-redirect-hh = {
+          priority = 4
+          actions = [{
+            type        = "redirect"
+            status_code = "HTTP_302"
+            host        = "stacksimplify.com"
+            path        = "/azure-aks/azure-kubernetes-service-introduction/"
+            query       = ""
+            protocol    = "HTTPS"
+          }]
+
+          conditions = [{
+            host_header = {
+              values = ["azure-aks11.devopsincloud.com"]
+            }
+          }]
+        }# Rule-4: Host Header Redirect  
       }# End Rules Block
     }# End my-https-listener Block
   }# End Listeners Block
