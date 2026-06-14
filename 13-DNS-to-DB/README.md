@@ -83,4 +83,3 @@ Notes:
 - ALB target groups are attached to the EC2 instances using `aws_lb_target_group_attachment` resources in `c10-02-ALB-application-loadbalancer.tf`.
 - Route53 record `dns-to-db.devopsincloud.com` is created in `c12-route53-dnsregistration.tf` as an Alias to the ALB DNS name.
 
-If you'd like, I can also generate an exportable PNG/SVG of the mermaid diagram or expand the README with the Terraform commands and outputs. 
